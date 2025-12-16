@@ -1,0 +1,67 @@
+{
+  "name": "web-pkm",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-oauth/google": "^0.12.2",
+    "axios": "^1.11.0",
+    "browser-image-compression": "^2.0.2",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dayjs": "^1.11.13",
+    "docx": "^9.5.1",
+    "docxtemplater": "^3.65.2",
+    "docxtemplater-image-module-free": "^1.1.1",
+    "exif-js": "^2.3.0",
+    "express": "^5.1.0",
+    "file-saver": "^2.0.5",
+    "firebase": "^11.10.0",
+    "gapi-script": "^1.2.0",
+    "googleapis": "^154.1.0",
+    "lucide-react": "^0.533.0",
+    "multer": "^2.0.2",
+    "pizzip": "^3.2.0",
+    "react": "^19.1.0",
+    "react-data-table-component": "^7.7.0",
+    "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "react-router-dom": "^7.6.3",
+    "react-toastify": "^11.0.5",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.29.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.29.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.2.0",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.1",
+    "vite": "^7.0.0"
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Auliazzahraa/web-sangkali.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Auliazzahraa/web-sangkali/issues"
+  },
+  "homepage": "https://github.com/Auliazzahraa/web-sangkali#readme"
+}

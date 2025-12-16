@@ -1,0 +1,70 @@
+# ----------------------
+# LOG FILES
+# ----------------------
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ----------------------
+# DEPENDENCIES
+# ----------------------
+node_modules
+
+# ----------------------
+# BUILD OUTPUT
+# ----------------------
+dist
+dist-ssr
+
+# ----------------------
+# ENV FILES
+# ----------------------
+.env
+.env.local
+.env.development
+.env.production
+
+# ----------------------
+# FIREBASE (optional jika pakai CLI)
+# ----------------------
+.firebase/
+.firebaserc
+
+# ----------------------
+# SYSTEM FILES
+# ----------------------
+*.local
+.DS_Store
+
+# ----------------------
+# EDITOR FILES
+# ----------------------
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Firebase service account key
+serviceAccountKey.json
+*.key.json
+*.json
+!package.json
+sikegiatan-sangkali-55837b246c93.json
+.vercel
+
+# Backend secrets (Firebase Admin / env)
+src/backend/.env
+src/backend/serviceAccountKey.json
+src/backend/*serviceAccount*.json
+src/backend/*adminsdk*.json
+sikegiatan-sangkali-55837b246c93.json
+src/uploads/
+
