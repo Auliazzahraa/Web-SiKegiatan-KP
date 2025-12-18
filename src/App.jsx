@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "./services/firebase";
@@ -20,6 +20,8 @@ import AuthCallback from "./pages/pegawai/AuthCallback";
 import ProtectedRoute from "./assets/components/ProtectedRoute";
 import AdminRoute from "./assets/components/AdminRoute";
 import { app } from "./services/firebase";
+
+
 
 
 
