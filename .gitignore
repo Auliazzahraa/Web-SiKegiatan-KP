@@ -58,6 +58,8 @@ serviceAccountKey.json
 *.json
 !package.json
 !vercel.json
+# Vercel local
+.vercel/
 
 
 # Backend secrets (Firebase Admin / env)
