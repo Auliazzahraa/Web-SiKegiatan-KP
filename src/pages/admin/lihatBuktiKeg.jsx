@@ -29,7 +29,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 dayjs.locale("id");
 
-/* ===================== Helpers ===================== */
+/* Helpers */
 function extractCloudinaryPublicId(fotoObj) {
   // kasus baru: { url, public_id }
   if (fotoObj && typeof fotoObj === "object" && fotoObj.public_id) {
@@ -138,7 +138,7 @@ export default function LihatBuktiKeg() {
     return () => unsub();
   }, []);
 
-  // ✅ ambil pelaksana dari users + users_pending
+  // ambil pelaksana dari users + users_pending
   useEffect(() => {
     let mapUsers = {};
     let mapPending = {};
@@ -178,7 +178,7 @@ export default function LihatBuktiKeg() {
     };
   }, []);
 
-  /* ===================== Helpers Pelaksana ===================== */
+  /* Helpers Pelaksana */
   const getPelaksanaNames = (row) => {
     if (Array.isArray(row?.nipKegiatan) && row.nipKegiatan.length) {
       const names = row.nipKegiatan
@@ -197,7 +197,7 @@ export default function LihatBuktiKeg() {
     return [];
   };
 
-  /* ===================== Filtering ===================== */
+  /* Filtering*/
   const filteredData = useMemo(() => {
     const q = search.trim().toLowerCase();
 

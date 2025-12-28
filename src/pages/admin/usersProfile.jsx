@@ -23,7 +23,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 dayjs.locale("id");
 
-/* ===================== Helpers ===================== */
+/* Helpers yang ini tuh */
 const normalizeRole = (r) => {
   const v = String(r || "").trim().toLowerCase();
   if (v === "admin") return "admin";
@@ -129,7 +129,7 @@ export default function UsersProfile() {
     const isEdit = !!editUser?.id; // edit existing
     const roleClean = normalizeRole(editUser.role);
 
-    // ✅ Validasi field wajib (email hanya wajib saat tambah)
+    // Validasi field wajib (email hanya wajib saat tambah)
     if (
       !editUser.nama?.trim() ||
       !editUser.nip?.trim() ||
@@ -197,7 +197,7 @@ export default function UsersProfile() {
     }
   };
 
-  /* ===================== DELETE USER (active) ===================== */
+  /* DELETE USER (active) */
   const handleDeleteUser = async (id) => {
     if (!window.confirm("Yakin ingin menghapus user ini?")) return;
     setDeleting(true);
@@ -206,7 +206,7 @@ export default function UsersProfile() {
       const userToDelete = users.find((u) => u.id === id);
       if (!userToDelete) throw new Error("User tidak ditemukan");
 
-      // 🔹 Panggil backend untuk hapus user dari Authentication + Firestore
+      //  Panggil backend untuk hapus user dari Authentication + Firestore
       const res = await fetch(`http://localhost:5000/delete-user/${id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -217,7 +217,7 @@ export default function UsersProfile() {
         throw new Error(err.error || "Gagal hapus user di backend");
       }
 
-      // 🔹 Opsional: hapus referensi di entries
+      // hapus referensi di entries
       const oldNama = userToDelete.nama;
       const oldNip = userToDelete.nip;
 
@@ -245,7 +245,7 @@ export default function UsersProfile() {
     }
   };
 
-  /* ===================== DELETE PENDING ===================== */
+  /* DELETE user yang pending */
   const handleDeletePending = async (id) => {
     if (!window.confirm("Hapus user pending ini?")) return;
     setDeleting(true);

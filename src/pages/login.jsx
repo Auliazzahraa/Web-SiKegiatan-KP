@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logopkm.png";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../services/firebase"; // pastikan path ke firebase.js sesuai
+import { auth } from "../services/firebase"; 
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../services/firebase";
 
@@ -34,18 +33,6 @@ export default function Login() {
   };
 
 
-  // sign in pake google
-  const handleGoogleSignIn = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-      navigate("/home");
-    } catch (error) {
-      console.error("Google Sign-In error:", error.message);
-      alert("Gagal login dengan Google: " + error.message);
-    }
-  };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,7 +50,7 @@ export default function Login() {
         const data = userDoc.data();
         const role = data.role;
 
-        // 🔀 Redirect berdasarkan role
+        // Redirect berdasarkan role
         if (role === "admin") {
           navigate("/dashboard");
         } else {

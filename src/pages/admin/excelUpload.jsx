@@ -36,19 +36,19 @@ export default function ExcelUpload() {
 
             const rowErrors = [];
 
-            // 1️⃣ cek kolom kosong
+            // cek kolom kosong
             if (!nama) rowErrors.push("Kolom 'Nama Kegiatan' kosong");
             if (!lokasi) rowErrors.push("Kolom 'Lokasi' kosong");
             if (!jenis) rowErrors.push("Kolom 'Jenis Kegiatan' kosong");
             if (!nip) rowErrors.push("Kolom 'NIP' kosong");
             if (!tanggalRaw) rowErrors.push("Kolom 'Tanggal' kosong");
 
-            // 2️⃣ cek NIP harus angka
+            // cek NIP harus angka
             if (nip && !/^\d+$/.test(nip)) {
               rowErrors.push("Kolom 'NIP' tidak valid (harus angka)");
             }
 
-            // 3️⃣ konversi & validasi tanggal
+            //  konversi & validasi tanggal
             let tanggalFinal = null;
             if (tanggalRaw) {
               if (typeof tanggalRaw === "number") {

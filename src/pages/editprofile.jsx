@@ -13,7 +13,7 @@ import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { Pencil, Trash2 } from "lucide-react";
 import imageCompression from "browser-image-compression";
 import { toast } from "react-toastify";
-import API from "../services/api"; // ✅ pakai backend untuk delete cloudinary
+import API from "../services/api"; // pakai backend untuk delete cloudinary
 
 function LoadingOverlay({ show, text }) {
   if (!show) return null;

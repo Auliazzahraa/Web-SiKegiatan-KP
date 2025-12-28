@@ -58,7 +58,7 @@ export default function SignUp() {
     setLoading(true);
 
     try {
-      // 1) cek NIP ada di users_pending (boleh walau belum login)
+      // cek NIP ada di users_pending (boleh walau belum login)
       const pendingRef = doc(db, "users_pending", nipClean);
       const pendingSnap = await getDoc(pendingRef);
 
@@ -70,11 +70,11 @@ export default function SignUp() {
 
       const pendingData = pendingSnap.data();
 
-      // 2) buat user auth (setelah ini user akan "login")
+      // buat user auth (setelah ini user akan "login")
       const userCredential = await createUserWithEmailAndPassword(auth, emailClean, password);
       const createdUser = userCredential.user;
 
-      // 3) SEKARANG baru aman query ke users (karena request.auth != null)
+      // baru aman query ke users (karena request.auth != null)
       const qUsers = query(collection(db, "users"), where("nip", "==", nipClean));
       const usersSnap = await getDocs(qUsers);
 
@@ -93,12 +93,12 @@ export default function SignUp() {
         return;
       }
 
-      // 4) update profile displayName
+      // update profile displayName
       await updateProfile(createdUser, {
         displayName: pendingData.nama || "User",
       });
 
-      // 5) simpan profil ke Firestore users/{uid}
+      // simpan profil ke Firestore users/{uid}
       await setDoc(doc(db, "users", createdUser.uid), {
         nip: nipClean,
         nama: pendingData.nama || "",
