@@ -212,6 +212,22 @@ useEffect(() => {
 // 🔹 Dalam
 useEffect(() => {
   const auth = getAuth();
+
+  let unsub1 = null;
+  let unsub2 = null;
+
+  // simpan hasil snapshot terbaru masing-masing query
+  let docs1 = new Map();
+  let docs2 = new Map();
+
+  const mergeAndSet = async () => {
+    const merged = new Map([...docs1, ...docs2]); // gabung, auto unique by id
+    const raw = Array.from(merged.values());
+    const withNama = await resolvePelaksana(raw);
+    setJadwalDalam(withNama);
+    setLoadingDalam(false);
+  };
+
   const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
     if (!user) return navigate("/");
 
@@ -219,38 +235,75 @@ useEffect(() => {
       const userDoc = await getDoc(doc(db, "users", user.uid));
       const userData = userDoc.data();
       const nip = userData?.nip;
-      if (!nip) {
-        console.warn("❌ User belum punya NIP, isi dulu di profile Firestore");
-        return;
-      }
+      if (!nip) return;
 
       setLoadingDalam(true);
+
       const key = getMonthYearKeyFromMonthString(selectedMonthDalam);
-      const q = query(
+
+      const q1 = query(
         collection(db, "jadwal", key, "entries"),
         where("nipKegiatan", "array-contains", nip),
         where("jenisKegiatan", "==", "Dalam Ruangan")
       );
 
-      const unsubSnap = onSnapshot(q, async (snap) => {
-        const raw = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        const withNama = await resolvePelaksana(raw);
-        setJadwalDalam(withNama);
-        setLoadingDalam(false);
+      const q2 = query(
+        collection(db, "jadwal", key, "entries"),
+        where("nipKegiatan", "array-contains", nip),
+        where("jenisKegiatan", "==", "dalam ruangan")
+      );
+
+      // reset map setiap kali auth/month berubah biar ga nyangkut
+      docs1 = new Map();
+      docs2 = new Map();
+
+      unsub1 = onSnapshot(q1, async (snap1) => {
+        docs1 = new Map(
+          snap1.docs.map((d) => [d.id, { id: d.id, ...d.data() }])
+        );
+        await mergeAndSet();
       });
 
-      return () => unsubSnap();
+      unsub2 = onSnapshot(q2, async (snap2) => {
+        docs2 = new Map(
+          snap2.docs.map((d) => [d.id, { id: d.id, ...d.data() }])
+        );
+        await mergeAndSet();
+      });
     } catch (err) {
       console.error("❌ Error dalam:", err);
       setLoadingDalam(false);
     }
   });
-  return () => unsubscribeAuth();
+
+  return () => {
+    unsubscribeAuth();
+    if (unsub1) unsub1();
+    if (unsub2) unsub2();
+  };
 }, [navigate, selectedMonthDalam]);
+
+
 
 // 🔹 Luar
 useEffect(() => {
   const auth = getAuth();
+
+  let unsub1 = null;
+  let unsub2 = null;
+
+  // simpan hasil snapshot terbaru masing-masing query
+  let docs1 = new Map();
+  let docs2 = new Map();
+
+  const mergeAndSet = async () => {
+    const merged = new Map([...docs1, ...docs2]); // gabung, unique by id
+    const raw = Array.from(merged.values());
+    const withNama = await resolvePelaksana(raw);
+    setJadwalLuar(withNama);
+    setLoadingLuar(false);
+  };
+
   const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
     if (!user) return navigate("/");
 
@@ -258,34 +311,58 @@ useEffect(() => {
       const userDoc = await getDoc(doc(db, "users", user.uid));
       const userData = userDoc.data();
       const nip = userData?.nip;
+
       if (!nip) {
         console.warn("❌ User belum punya NIP, isi dulu di profile Firestore");
         return;
       }
 
       setLoadingLuar(true);
+
       const key = getMonthYearKeyFromMonthString(selectedMonthLuar);
-      const q = query(
+
+      const q1 = query(
         collection(db, "jadwal", key, "entries"),
         where("nipKegiatan", "array-contains", nip),
         where("jenisKegiatan", "==", "luar ruangan")
       );
 
-      const unsubSnap = onSnapshot(q, async (snap) => {
-        const raw = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        const withNama = await resolvePelaksana(raw);
-        setJadwalLuar(withNama);
-        setLoadingLuar(false);
+      const q2 = query(
+        collection(db, "jadwal", key, "entries"),
+        where("nipKegiatan", "array-contains", nip),
+        where("jenisKegiatan", "==", "Luar Ruangan")
+      );
+
+      // reset map tiap kali auth/month berubah biar ga nyangkut
+      docs1 = new Map();
+      docs2 = new Map();
+
+      unsub1 = onSnapshot(q1, async (snap1) => {
+        docs1 = new Map(
+          snap1.docs.map((d) => [d.id, { id: d.id, ...d.data() }])
+        );
+        await mergeAndSet();
       });
 
-      return () => unsubSnap();
+      unsub2 = onSnapshot(q2, async (snap2) => {
+        docs2 = new Map(
+          snap2.docs.map((d) => [d.id, { id: d.id, ...d.data() }])
+        );
+        await mergeAndSet();
+      });
     } catch (err) {
       console.error("❌ Error luar:", err);
       setLoadingLuar(false);
     }
   });
-  return () => unsubscribeAuth();
+
+  return () => {
+    unsubscribeAuth();
+    if (unsub1) unsub1();
+    if (unsub2) unsub2();
+  };
 }, [navigate, selectedMonthLuar]);
+
 
 
  // 🔹 update preview realtime saat ganti warna overlay
