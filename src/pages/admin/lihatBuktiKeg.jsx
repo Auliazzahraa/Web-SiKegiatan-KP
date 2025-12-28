@@ -91,6 +91,8 @@ export default function LihatBuktiKeg() {
   const [editRow, setEditRow] = useState(null);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [jenisOriginal, setJenisOriginal] = useState("");
+
 
   // users map: nip -> nama
   const [usersMap, setUsersMap] = useState({});
@@ -795,16 +797,26 @@ export default function LihatBuktiKeg() {
                   className="border rounded px-3 py-2 w-full"
                 />
               </div>
-
               <div>
                 <label className="block text-sm font-medium">Jenis Kegiatan</label>
                 <select
-                  value={editRow.jenisKegiatan || ""}
-                  onChange={(e) => setEditRow({ ...editRow, jenisKegiatan: e.target.value })}
+                  value={(editRow.jenisKegiatan || "").trim().toLowerCase()}
+                  onChange={(e) => {
+                    const val = e.target.value; // ini sudah lowercase dari option
+                    setEditRow({
+                      ...editRow,
+                      jenisKegiatan:
+                        val === "dalam ruangan"
+                          ? "Dalam Ruangan"
+                          : val === "luar ruangan"
+                          ? "Luar Ruangan"
+                          : "",
+                    });
+                  }}
                   className="border rounded px-3 py-2 w-full"
                 >
                   <option value="">Pilih Jenis</option>
-                  <option value="Dalam Ruangan">Dalam Ruangan</option>
+                  <option value="dalam ruangan">Dalam Ruangan</option>
                   <option value="luar ruangan">Luar Ruangan</option>
                 </select>
               </div>
@@ -916,12 +928,12 @@ export default function LihatBuktiKeg() {
               <div>
                 <label className="block text-sm font-medium">Jenis Kegiatan</label>
                 <select
-                  value={newRow.jenisKegiatan}
+                  value={(newRow.jenisKegiatan || "").toLowerCase()}
                   onChange={(e) => setNewRow({ ...newRow, jenisKegiatan: e.target.value })}
                   className="border rounded px-3 py-2 w-full"
                 >
                   <option value="">Pilih Jenis</option>
-                  <option value="Dalam Ruangan">Dalam Ruangan</option>
+                  <option value="dalam ruangan">Dalam Ruangan</option>
                   <option value="luar ruangan">Luar Ruangan</option>
                 </select>
               </div>
